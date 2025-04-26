@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Calculator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fc;
+      margin: 0;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1400px;
+      width: 100%;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      font-size: 28px;
+      color: #333;
+      text-align: center;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #555;
+      font-size: 18px;
+    }
+
+    select {
+      padding: 12px 18px;
+      margin-top: 10px;
+      margin-bottom: 40px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    select:focus {
+      border-color: #007BFF;
+      box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 30px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .product {
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      background: #fafafa;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .product:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .product img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #e0e0e0;
+      transition: border-color 0.3s;
+    }
+
+    .product img:hover {
+      border-color: #007BFF;
+    }
+
+    #result {
+      margin-top: 40px;
+      font-size: 1.6em;
+      font-weight: bold;
+      color: #007BFF;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Select Size and Click on a Product</h2>
+
+  <label for="size">Choose a Size (cm):</label>
+  <select id="size">
+    <option>60x60</option><option>30x60</option><option>40x60</option><option>120x60</option><option>240x60</option>
+    <option>60x40</option><option>30x40</option><option>40x40</option><option>120x40</option><option>240x40</option>
+    <option>60x80</option><option>30x80</option><option>40x80</option><option>120x80</option><option>240x80</option>
+    <option>60x120</option><option>30x120</option><option>40x120</option><option>120x120</option><option>240x120</option>
+    <option>80x80</option>
+  </select>
+
+  <div class="products">
+    <div class="product" onclick="calculate(1500)">
+      <img src="images/Dense pattern SS 304 Black sheet.jpg">
+    </div>
+    <div class="product" onclick="calculate(900)">
+      <img src="images/Dense pattern SS 304 gold Brush.jpg">
+    </div>
+    <div class="product" onclick="calculate(1000)">
+      <img src="images/Dense pattern SS 304 gold mirror.jpg">
+    </div>
+    <div class="product" onclick="calculate(340)">
+      <img src="images/Dense pattern SS 304 Silver Brush.jpg">
+    </div>
+    <div class="product" onclick="calculate(1800)">
+      <img src="images/Dense pattern SS 316 gold Brush.jpg">
+    </div>
+    <div class="product" onclick="calculate(2000)">
+      <img src="images/Dense pattern SS 316 gold mirror.jpg">
+    </div>
+    <div class="product" onclick="calculate(680)">
+      <img src="images/Dense pattern SS 316 Silver Brush.jpg">
+    </div>
+    <div class="product" onclick="calculate(324)">
+      <img src="images/open pattern black powder coating metal.jpg">
+    </div>
+    <div class="product" onclick="calculate(486)">
+      <img src="images/Open pattern SS 304 gold Brush.jpg">
+    </div>
+    <div class="product" onclick="calculate(292)">
+      <img src="images/Open pattern SS 304 silver Brush.jpg">
+    </div>
+    <div class="product" onclick="calculate(540)">
+      <img src="images/Open pattern SS 304 silver mirror.jpg">
+    </div>
+    <div class="product" onclick="calculate(972)">
+      <img src="images/Open pattern SS 316 gold Brush.jpg">
+    </div>
+    <div class="product" onclick="calculate(1800)">
+      <img src="images/Open pattern SS 316 gold mirror.jpg">
+    </div>
+    <div class="product" onclick="calculate(1080)">
+      <img src="images/Open pattern SS 316 silve mirror.jpg">
+    </div>
+    <div class="product" onclick="calculate(583)">
+      <img src="images/Open pattern SS 316 silver Brush.jpg">
+    </div>
+    <div class="product" onclick="calculate(720)">
+      <img src="images/open_dense pattern gold powder coating metal sheet.jpg">
+    </div>
+    <div class="product" onclick="calculate(1600)">
+      <img src="images/open_dense pattern ss 304 platting.jpg">
+    </div>
+  </div>
+
+  <div id="result">Result will appear here</div>
+</div>
+
+<script>
+  function calculate(productValue) {
+    const size = document.getElementById("size").value;
+    const [width, height] = size.split('x').map(Number);
+    const area = (width * height) / 10000; // Convert to square meters
+    const result = productValue * area;
+    document.getElementById("result").innerText = `Result: ₹${result.toFixed(2)}`;
+  }
+</script>
+
+</body>
+</html>
